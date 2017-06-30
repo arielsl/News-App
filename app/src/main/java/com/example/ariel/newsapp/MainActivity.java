@@ -1,51 +1,81 @@
 package com.example.ariel.newsapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+
+import com.example.ariel.newsapp.utilities.NetworkUtils;
+import com.example.ariel.newsapp.utilities.JsonUtil;
+import com.example.ariel.newsapp.models.NewsItem;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private URL newsApi;
-    private TextView mTextView;
+    static final String TAG = "mainactivity";
+    private RecyclerView recyclerView;
+    private ViewAdapter startAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTextView = (TextView)findViewById(R.id.textView);
-        newsApi = NetworkUtils.mUriBuilder();
-        new HTTPResponseTask().execute();
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(startAdapter);
+        new FetchNewsTask().execute();
     }
 
-    private class HTTPResponseTask extends AsyncTask<URL, Void, String> {
 
+    public class FetchNewsTask extends AsyncTask<String, Void, ArrayList<NewsItem>>{
         @Override
-        protected String doInBackground(URL... params) {
-            String results = null;
-            try {
-                results = NetworkUtils.getResponseFromHttpUrl(newsApi);
-            } catch (IOException e) {
+        protected ArrayList<NewsItem> doInBackground(String... params){
+            ArrayList<NewsItem> articleList = null;
+
+            URL newsRequestUrl = NetworkUtils.mUriBuilder();
+
+            try{
+                String jsonNewsDataResponse = NetworkUtils.getResponseFromHttpUrl(newsRequestUrl);
+                articleList = JsonUtil.parseJSON(jsonNewsDataResponse);
+
+            } catch (IOException e){
+                e.printStackTrace();
+            } catch(JSONException e){
                 e.printStackTrace();
             }
-            return results;
+
+            return articleList;
         }
 
         @Override
-        protected void onPostExecute(String results) {
+        protected void onPostExecute(final ArrayList<NewsItem> articleList){
+            super.onPostExecute(articleList);
 
-            if(results != null && !results.equals("")){
-                mTextView.setText(results);
+            if(articleList!= null) {
+                ViewAdapter adapter = new ViewAdapter(articleList, new ViewAdapter.NewsClickListener() {
+                    @Override
+                    public void onNewsClick(int clickedItemIndex) {
+                        String url = articleList.get(clickedItemIndex).getUrl();
+                        Log.d(TAG, String.format("URL CLICKED: %s", url));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                    }
+                });
+                recyclerView.setAdapter(adapter);
             }
-            else{
 
-            }
         }
     }
 
@@ -60,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.refresh) {
-            new HTTPResponseTask().execute();
+            new FetchNewsTask().execute();
             return true;
         }else{
         }

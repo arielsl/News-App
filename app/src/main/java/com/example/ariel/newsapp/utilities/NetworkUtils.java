@@ -1,4 +1,4 @@
-package com.example.ariel.newsapp;
+package com.example.ariel.newsapp.utilities;
 
 /**
  * Created by Ariel on 6/25/2017.
@@ -22,7 +22,7 @@ public class NetworkUtils {
     final static String query_parameter1 = "the-next-web";
     final static String query_parameter2 = "latest";
     //Paste unique News API key into query_parameter3
-    final static String query_parameter3 = "";
+    final static String query_parameter3 = "2c531120bd4740dd919b9ca945ec03ac";
     //Help for URI builder from https://stackoverflow.com/questions/19167954/use-uri-builder-in-android-or-create-url-with-variables
     public static URL mUriBuilder() {
         Uri.Builder builder = new Uri.Builder();
