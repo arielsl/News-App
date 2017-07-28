@@ -1,32 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="1">
+<!-- We add weight to the layout to properly give space to each element -->
 
-    <TextView
-        android:id="@+id/news_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
+    <!-- We add an image view element to be able to upload the image of the news article -->
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/news_image"
+        android:layout_weight=".3"/>
 
-    <TextView
-        android:id="@+id/news_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textSize="12sp"
-        />
+    <!-- We separate text to its own layout to keep the format of it, while not taking too much-->
+    <!-- space to fit the image -->
+    <!-- We also write some placeholder text to visualize the position of each element-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight=".7">
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:text="This is a sample title"/>
 
-    <TextView
-        android:id="@+id/news_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="14sp"
-        />
+        <TextView
+            android:id="@+id/news_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textSize="12sp"
+            android:text="November 17, 2020"/>
+
+        <TextView
+            android:id="@+id/news_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:text="This is a lot of text representing a description of a sample news article"/>
+    </LinearLayout>
 
 </LinearLayout>
