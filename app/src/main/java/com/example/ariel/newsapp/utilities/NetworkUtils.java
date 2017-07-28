@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.Scanner;
 
+//This class will help us to build the url to the json file and get the response from it
 public class NetworkUtils {
     final static String base_url = "newsapi.org";
     final static String path1 = "v1";
@@ -23,7 +24,9 @@ public class NetworkUtils {
     final static String query_parameter2 = "latest";
     //Paste unique News API key into query_parameter3
     final static String query_parameter3 = "2c531120bd4740dd919b9ca945ec03ac";
+
     //Help for URI builder from https://stackoverflow.com/questions/19167954/use-uri-builder-in-android-or-create-url-with-variables
+    //This class will build the url for us with the given above parameters
     public static URL mUriBuilder() {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
@@ -44,6 +47,7 @@ public class NetworkUtils {
         return url;
     }
 
+    //This class will use the json url to retrieve it and return it as a string
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {

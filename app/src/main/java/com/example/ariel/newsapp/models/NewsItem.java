@@ -4,6 +4,8 @@ package com.example.ariel.newsapp.models;
  * Created by Ariel on 6/29/2017.
  */
 
+//This class represents each news article
+//It contains a variable for each item in the article
 public class NewsItem {
     private String author;
     private String title;
@@ -12,6 +14,7 @@ public class NewsItem {
     private String image;
     private String date;
 
+    //The class constructor
     public NewsItem(String authorIn, String titleIn, String descriptionIn, String urlIn, String imageIn, String dateIn){
         this.author = authorIn;
         this.title = titleIn;
@@ -21,6 +24,7 @@ public class NewsItem {
         this.date = dateIn;
     }
 
+    //Getters are used to get the info for each article when needed
     public String getAuthor() {
         return author;
     }

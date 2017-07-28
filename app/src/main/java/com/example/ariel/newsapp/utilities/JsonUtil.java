@@ -21,10 +21,14 @@ public class JsonUtil {
     private static String IMAGE = "urlToImage";
     private static String DATE = "publishedAt";
 
+    //Pass the url of the json file to parse it and return an array of the articles retrieved
     public static ArrayList<NewsItem> parseJSON(String json) throws JSONException {
+        //This array will hold all the articles in the json file
         ArrayList<NewsItem> newsArticles = new ArrayList<>();
         JSONObject main = new JSONObject(json);
         JSONArray articles = main.getJSONArray(ARTICLES);
+        //For each article in the json file get the values and pass them to a NewsItems class,
+        //Then add the NewsItem to the array and return the array
         for(int i = 0; i < articles.length(); i++){
             JSONObject article = articles.getJSONObject(i);
 
