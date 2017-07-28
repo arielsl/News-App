@@ -24,7 +24,7 @@ public class NewsTask extends JobService{
             @Override
             protected void onPreExecute(){
                 //Makes a toast to tell the user the news have been updated
-                Toast.makeText(NewsTask.this, "Most recent news have been added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewsTask.this, "Database reloaded with newest articles.", Toast.LENGTH_SHORT).show();
                 super.onPreExecute();
             }
 
